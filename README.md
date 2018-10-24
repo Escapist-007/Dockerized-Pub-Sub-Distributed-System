@@ -22,4 +22,4 @@ Now restart your OS. Start a terminal again.
 $ docker run hello-world
 ```
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Pub-Sub-Distributed-System-Using-Docker/Lobby?source=orgpage?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Pub-Sub-Distributed-System-Using-Docker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
