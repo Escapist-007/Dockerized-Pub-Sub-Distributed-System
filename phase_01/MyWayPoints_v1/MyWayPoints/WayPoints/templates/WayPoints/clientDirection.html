@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title> MyWayPoints_Phase-01_50291708</title>
+    <style>
+      /* "map" is the ID of the div element which will contain the map object */
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #input-panel {
+        position: absolute;
+        top: 10px;
+        left: 0%;
+        right:85%;
+        z-index: 5;
+        background-color: #4BF60B;
+        padding: 8px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 20px;
+      }
+      #submit{
+        width: 30%;
+        height: 20px;
+        padding: 2px 2px 2px 2px;
+      }
+      #map-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+   </style>
+ </head>
+  <body>
+
+    <div id="input-panel">
+      <br>
+      <b> Origin : </b>
+        <input id="origin" type="text" >
+      <b> Destination: </b>
+        <input id="destination" type="text"><br><br>
+        <input id="submit" type="button" value='Submit'>
+    </div>
+
+    <div id="map"> </div> /*Contains the map object*/
+    <!-- References : https://developers.google.com/maps/documentation/javascript/directions#InspectingResults
+                       https://developers.google.com/maps/documentation/javascript/examples/directions-complex -->
+
+    <script>
+       /* Callback Function*/
+    function initMap() {
+
+         var default_map_location = new google.maps.LatLng(43.0027950, -78.7871450);
+         var mapOptions = {
+           center: default_map_location,
+           zoom: 15,
+         }
+         var map = new google.maps.Map(document.getElementById('map'), mapOptions);    // Create a map object
+
+         var submitButtonClickHandler = function() {
+
+           var map = new google.maps.Map(document.getElementById('map'), mapOptions);  // Create a map object
+           // geocoing
+           geocoder = new google.maps.Geocoder();
+           geocoder.geocode( { 'address': document.getElementById('origin').value}, function(results, status) {
+              if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });
+
+           var directionsService = new google.maps.DirectionsService();                  // Instantiate a directions service.
+           var rendererOptions = {
+              map: map
+           }
+           var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);  // Create a renderer for directions and bind it to the map.
+           var infoWindow = new google.maps.InfoWindow();                             //  Instantiate an info window to hold step text.
+
+           calcRoute(directionsService, directionsDisplay, infoWindow, map);
+         };
+
+         document.getElementById('submit').addEventListener('click', submitButtonClickHandler);
+
+      }
+
+    function calcRoute(directionsService, directionsDisplay, infoWindow, map) {
+        // Retrieve the start and end locations and create a DirectionsRequest using Driving directions.
+        var request = {
+           origin: document.getElementById('origin').value,
+           destination: document.getElementById('destination').value,
+           travelMode: 'DRIVING'
+        };
+
+        directionsService.route(request, function(response, status) {
+          //console.log(response);
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);  // display the route between origin and destination
+            showSteps(response, infoWindow, map);
+          }
+        });
+      }
+
+     // Place the markers
+    function showSteps(directionResult, infoWindow, map) {
+        // For each step, place a marker, and add the text to the marker's infowindow.
+        // Also attach the marker to an array so we can keep track of it and remove it when calculating new routes.
+        var myRoute = directionResult.routes[0].legs[0];
+          // As we are not giving any waypoints so there should be one route containig one leg.
+          // Leg contains multiple steps. Each step is represented in a 'Polyline'. After decoding polyline we will get an array of coordinates.
+          // steps is an array
+        for (var i = 0; i < myRoute.steps.length; i+=2) {
+            var points_in_current_step = decode(myRoute.steps[i].polyline.points);
+            var lat = points_in_current_step[0][0];  // taking only the first point
+            var lon = points_in_current_step[0][1];
+            var lat_lon = lat +'-'+lon;
+
+            // creating marker object
+            var position = myRoute.steps[i].start_location;
+
+            var marker = new google.maps.Marker({
+              map: map,
+              position: position,
+              title: lat_lon,
+              id : 1,
+              animation: google.maps.Animation.DROP
+            });
+
+            // Create an onclick event to open an infowindow at each marker.
+            marker.addListener('click', function() {
+              populateInfoWindow(this, infoWindow);
+            });
+
+          }
+      }
+
+      // This function populates the infowindow when the marker is clicked. We'll only allow
+      // one infowindow which will open at the marker that is clicked, and populate based
+      // on that markers position.
+    function populateInfoWindow(marker, infowindow) {
+        // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+            console.log(marker.title);
+            console.log(marker.id);
+            if(marker.id==1){
+                  var tmp = marker.title.split("--");
+                  if (tmp[1] == null){
+                       tmp = marker.title.split("-");
+                  }
+                  var latitude  = tmp[0];
+                  var longitude = tmp[1];
+
+                  // Reference: https://www.taniarascia.com/how-to-connect-to-an-api-with-javascript/
+                  var requestString = "http://api.openweathermap.org/data/2.5/weather?lat="
+                                      + latitude + "&lon=" + longitude
+                                      + "&cluster=yes&format=json"
+                                      + "&APPID=321bf4c7e4f65927b0d3f37ebe265498";
+
+                  console.log(requestString);
+
+                  // Create a request variable and assign a new XMLHttpRequest object to it.
+                  var request = new XMLHttpRequest();
+                  // Open a new connection, using the GET request on the URL endpoint
+                  request.open("get", requestString, true);
+
+                  request.onload = function () {
+                    // Begin accessing JSON data here
+                    var data = JSON.parse(this.responseText);
+                    marker.title =  'Temp : '+ data.main.temp + ", Description : "+ data.weather[0].description ;
+                    marker.id = 100;
+
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title+ '</div>');
+                    infowindow.open(map, marker);
+                    // Make sure the marker property is cleared if the infowindow is closed.
+                    infowindow.addListener('closeclick',function(){
+                      infowindow.setMarker = null;
+                    });
+                  }
+
+                  // Send request
+                  request.send();
+            }
+            else{
+                    infowindow.marker = marker;
+                    infowindow.setContent('<div>' + marker.title + '</div>');
+                    infowindow.open(map, marker);
+                    // Make sure the marker property is cleared if the infowindow is closed.
+                    infowindow.addListener('closeclick',function(){
+                      infowindow.setMarker = null;
+                    });
+            }
+          }
+        }
+
+   // Polyline string _collected from internet
+
+    function decode(polyline_str) {
+        var b, changes, coordinates, index, lat, lng, result, shift;
+        [index, lat, lng] = [0, 0, 0];
+        coordinates = [];
+        changes = {"latitude": 0, "longitude": 0};
+        while ((index < polyline_str.length)) {
+            for (var unit, _pj_c = 0, _pj_a = ["latitude", "longitude"], _pj_b = _pj_a.length; (_pj_c < _pj_b); _pj_c += 1) {
+                unit = _pj_a[_pj_c];
+                [shift, result] = [0, 0];
+                while (true) {
+                    b = polyline_str.charCodeAt(index) - 63;
+                    index += 1;
+                    result |= ((b & 31) << shift);
+                    shift += 5;
+                    if ((! (b >= 32))) {
+                        break;
+                    }
+                }
+                if ((result & 1)) {
+                    changes[unit] = (~ (result >> 1));
+                } else {
+                    changes[unit] = (result >> 1);
+                }
+            }
+            lat += changes["latitude"];
+            lng += changes["longitude"];
+            coordinates.push([(lat / 100000.0), (lng / 100000.0)]);
+        }
+        return coordinates;
+     }
+
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0azh0XB63dYtAvwRO1kmtVpOgrTynUlU&callback=initMap"; >  </script>
+  </body>
+</html>

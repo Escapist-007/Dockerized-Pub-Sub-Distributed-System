@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title> My Way Points </title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 17px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 30%;
+            outline: none;
+            color: #fff;
+            background-color: #9C33FF;
+            border: none;
+            border-radius: 13px;
+            box-shadow: 0 9px #999;
+            margin-top: 25px
+        }
+
+        .button:hover {
+            background-color: #00BFFF
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+
+<body bgcolor="#ADFF2F">
+
+    <form name="form" action="http://127.0.0.1:8000/map/input/" method="POST">
+        {% csrf_token %}
+        <div style="max-width:970px;">
+            <center>
+               {% load staticfiles  %}
+                <img src="{% static "WayPoints/logo.png" %}" alt="Logo" height="122" width="122" style="margin-left:30%;margin-top:70px">
+            </center>
+        </div>
+
+        <div style="max-width:970px;">
+            <center>
+               {% load staticfiles  %}
+                <img src="{% static "WayPoints/title.png" %}" alt="Title" height="30" width="150" style="margin-left:30%;margin-top:05px">
+            </center>
+        </div>
+
+        <div style="max-width:970px;">
+            <center>
+                <input type="text" style="margin-left:30%;margin-top:35px" placeholder="Enter Origin" name="origin" />
+            </center>
+        </div>
+
+        <br>
+
+        <div style="max-width:970px;">
+            <center>
+                <input type="text" style="margin-left:30%;" placeholder="Enter Destination" name="destination" />
+            </center>
+        </div>
+
+        <br>
+
+        <div style="max-width:970px;">
+            <center>
+
+                <button class="button" type="submit" value="Submit">Submit</button>
+
+            </center>
+        </div>
+
+    </form>
+
+</body>
+
+</html>
