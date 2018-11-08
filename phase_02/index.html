@@ -129,40 +129,87 @@
 
   <!-- This division is for adding and removing publishers-->
     <div id='add_rem_pub' class='textbox-design'>
-      <input type='text' class='form-control' placeholder='Publisher Name'>
-      <button class='btn btn-default'>Add</button>
-      <button class='btn btn-default'>Remove</button>
+    	<input type='text' class='form-control' placeholder='Publisher Name'>
+    	<button class='btn btn-default'>Add</button>
+    	<button class='btn btn-default'>Remove</button>
     </div>
 
     <!-- This division deals with the list of publishers-->
     <div id='list-of-publishers'>
-       {{#publishers_array}}
+	     {{#publishers_array}}
        <!-- This is an array, so we need to access it through sections.
          {{#publishers_array}}
          /* something*/
          {{/publishers_array}}-->
 
         <!-- this is the division that deals with activities of a publisher-->
-        <div class='publisher'>
-          <h5>{{name}}</h5>
-          <input type='text' class='form-control' placeholder='TopicName'>
-          <textarea  class='form-control' placeholder='Your Thoughts'></textarea>
-          <button class='btn btn-default' font-size="+3" font-weight=700>Publish</button>
+      	<div class='publisher'>
+      		<h5>{{name}}</h5>
+      		<input type='text' class='form-control' placeholder='TopicName'>
+      		<textarea  class='form-control' placeholder='Your Thoughts'></textarea>
+      		<button class='btn btn-default' font-size="+3" font-weight=700>Publish</button>
 
           <!-- Inside publishers array, there is an array of Tweets each of which has a topic name and details.-->
-              <ol>
-                {{#Tweets}}
-                <li>
-                  <b>{{TopicName}}</b>
+          		<ol>
+          			{{#Tweets}}
+          			<li>
+          				<b>{{TopicName}}</b>
                   <br>
-                  {{Details}}
-                </li>
-                {{/Tweets}}
-              </ol>
+          				{{Details}}
+          			</li>
+          			{{/Tweets}}
+          		</ol>
          </div>
-         {{/publishers_array}}
-      <br style='clear:both' />
+    	   {{/publishers_array}}
+    	<br style='clear:both' />
   </div>
+
+
+<!-- This is the Subscribers section -->
+<h2> Subscribers </h2>
+
+<!-- this is the division which deals with adding and removing subscribers-->
+<div id='add_rem_sub' class='textbox-design'>
+	<input type='text' class='form-control' placeholder='Subscriber Name'>
+	<button class='btn btn-default'>Add</button>
+	<button class='btn btn-default'>Remove</button>
+</div>
+
+<!-- this is the division which deals with the list of subscribers-->
+<div id='list-of-subscribers'>
+        <!-- We need to access subscribers array through sections -->
+      	{{#subscribers_array}}
+        <!-- this section handles all the activities of subscriber design-->
+      	<div class='subscriber'>
+          		<h5>{{name}}</h5> <!-- The names are variables-->
+          		<input type='text' class='form-control' placeholder='Your Topic of Interest'>
+          		<button class='btn btn-default'>Subscribe</button>
+              <br><br>
+          		<h7>Subscriptions </h7>
+              		<ol class='TopicNames'>
+              			{{#TopicNames}}
+              			   <li> {{.}}
+              			{{/TopicNames}}
+              		</ol>
+              <!-- All the tweets are listed one by one in an unordered list-->
+          		<h7>Tweets From Your Subscriptions</h7>
+              		<ul class='sub_notif_list'>
+              			{{#sub_notif_list}}
+              			   <li> <b>{{TopicName}}: </b> <br>Tweet: {{Details}} <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-posted by <i>{{name}}</i>
+              			{{/sub_notif_list}}
+
+              		</ul>
+      	</div>
+      	{{/subscribers_array}}
+	<br style='clear:both' />
+</div>
+<!-- including js scripts-->
+<script src='node_modules/jquery/dist/jquery.js'></script>
+<script src='node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+<script src='publishsubscribe.js'></script>
+<script src='pubsubfunc.js'></script>
+<script src='node_modules/mustache/mustache.js'></script>
+
 
 
 
