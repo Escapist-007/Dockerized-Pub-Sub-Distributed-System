@@ -51,6 +51,21 @@ docker run -d -p 80:8000 --name django-container simple-django-app   # running t
 ```
 Now, go to the url `127.0.0.1:80/map` to see the output of the app from docker. 
 
+# How to run phase-02 (Distributed Publisher/Subscriber System with a Central Server)
+
+First go the `phase_02` directory. Then run the below commands:
+
+```
+docker build -t pubsub-image:v1 #create new image for pubsub application
+docker run -d -p 80:80 --name pubsub_central pubsub-image:v1 #running image in a new container
+```
+Now go to url `localhost:80` to see the output of the app from docker.
+
+### Youtube Video Demonstration
+
+Here's a link to see the output: https://www.youtube.com/watch?v=fg4W4bTAShM
+
+There are also screenshots available in the repo under the Screenshots folder.
 
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Pub-Sub-Distributed-System-Using-Docker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
