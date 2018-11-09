@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+
+<html>
+<script src='node_modules/jquery/dist/jquery.js'></script>
+<script src='node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+<script src='node_modules/mustache/mustache.js'></script>
+<script src='publishsubscribe.js'></script>
+<script src='pubsubfunc.js'></script>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable = no">
+  <meta charset = "utf-8">
+  <title> Pub Sub Distributed System</title>
+  <link rel='stylesheet' href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
+
+  <style>
+    html,body {
+        background-image: url('https://images.unsplash.com/photo-1519114056088-b877fe073a5e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=148b001f50f5029d6193578567d18eca&auto=format&fit=crop&w=1490&q=80');
+        font-family: Helvetica, Arial, sans-serif;
+
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+
+    .subscriber{
+      border:3px solid black;
+      width:400px;
+      height:auto;
+      float:right;
+      padding: 20px;
+      background-image: url('https://images.unsplash.com/photo-1490126296131-3de6bd234be6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=96b64858c53be432aca6bc4beed42103&auto=format&fit=crop&w=1050&q=80');
+    }
+    .publisher{
+      border:3px solid black;
+    	width:400px;
+      height:auto;
+    	float:right;
+    	padding: 20px;
+      background-image: url('https://images.unsplash.com/photo-1490126296131-3de6bd234be6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=96b64858c53be432aca6bc4beed42103&auto=format&fit=crop&w=1050&q=80');
+    }
+
+    .textbox-design{
+    	width:500px;
+    	margin-top:20px;
+    	margin-bottom:20px;
+      position: relative;
+
+    }
+    .textbox-design input{
+    		width:70%;
+    		display: inline
+        position: relative;
+    }
+
+    .textbox-design button{
+    		width:34.5%;
+        position: relative;
+
+    }
+    h1{
+      font-size: 60px;
+      font-weight: 700;
+      font-family: fantasy;
+      color:white;
+      text-align: center;
+    }
+    h2{
+      font-size: 60px;
+      font-weight: 700;
+      font-family: fantasy;
+      color:white;
+    }
+    #input_area {
+      overflow: hidden;
+      word-wrap: break-word;
+      position: relative;
+      top: 20px;
+      /*bottom: 100%;*/
+      left: 0%;
+      right:50%;
+      z-index: 5;
+      width: 100%;
+      height: 10%;
+      /*padding: 10px;
+      border: 2px solid #989;*/
+      text-align: center;
+      font-family: 'Roboto','sans-serif';
+      /*line-height: 20px;*/
+      /*background-image: url(https://images.unsplash.com/photo-1531585778618-fa2a2283a4eb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5b06d09e5e180315962be315f040720&auto=format&fit=crop&w=298&q=80);*/
+      /*background-image: :url(https://images.unsplash.com/photo-1516912481808-3406841bd33c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=859ed08b994af2b44509aeb00f56d7f9&auto=format&fit=crop&w=683&q=80);*/
+      /*background-size:cover;*/
+    }
+    .btn{
+
+      font-weight: 700;
+      color: black;
+      background-color: grey;
+      border-color: black;
+    }
+    #flaticon{
+      font-size: 8px;
+    }
+
+  </style>
+</head>
+<body>
+  <script src='node_modules/jquery/dist/jquery.js'></script>
+  <script src='node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+  <script src='node_modules/mustache/mustache.js'></script>
+  <script src='publishsubscribe.js'></script>
+  <script src='pubsubfunc.js'></script>
+  <div id = "input_area">
+  <img src ="https://image.flaticon.com/icons/svg/1088/1088571.svg" style="width:50px;height:50px;">
+
+  <b><font size="+5"> PUB/SUB DISTRIBUTED MODEL</font>
+  <img src ="https://image.flaticon.com/icons/svg/473/473106.svg" style="width:50px;height:50px;">
+  </div>
+
+  <br>
+  <!-- This is the publishers section-->
+  <h2> Publishers </h2>
+  <!-- References
+        https://www.w3schools.com/jsref/
+        https://api.jquery.com/
+        https://www.youtube.com/watch?v=frGy-nGoGU
+        https://www.youtube.com/watch?v=5wylV5in9q
+        https://hackernoon.com/observer-vs-pub-sub-pattern-50d3b27f838c
+        https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
+  -->
+
+  <!-- This division is for adding and removing publishers-->
+    <div id='add_rem_pub' class='textbox-design'>
+    	<input type='text' class='form-control' placeholder='Publisher Name'>
+    	<button class='btn btn-default'>Add</button>
+    	<button class='btn btn-default'>Remove</button>
+    </div>
+
+    <!-- This division deals with the list of publishers-->
+    <div id='list-of-publishers'>
+	     {{#publishers_array}}
+       <!-- This is an array, so we need to access it through sections.
+         {{#publishers_array}}
+         /* something*/
+         {{/publishers_array}}-->
+
+        <!-- this is the division that deals with activities of a publisher-->
+      	<div class='publisher'>
+      		<h5>{{name}}</h5>
+      		<input type='text' class='form-control' placeholder='TopicName'>
+      		<textarea  class='form-control' placeholder='Your Thoughts'></textarea>
+      		<button class='btn btn-default' font-size="+3" font-weight=700>Publish</button>
+
+          <!-- Inside publishers array, there is an array of Tweets each of which has a topic name and details.-->
+          		<ol>
+          			{{#Tweets}}
+          			<li>
+          				<b>{{TopicName}}</b>
+                  <br>
+          				{{Details}}
+          			</li>
+          			{{/Tweets}}
+          		</ol>
+         </div>
+    	   {{/publishers_array}}
+    	<br style='clear:both' />
+  </div>
+
+
+<!-- This is the Subscribers section -->
+<h2> Subscribers </h2>
+
+<!-- this is the division which deals with adding and removing subscribers-->
+<div id='add_rem_sub' class='textbox-design'>
+	<input type='text' class='form-control' placeholder='Subscriber Name'>
+	<button class='btn btn-default'>Add</button>
+	<button class='btn btn-default'>Remove</button>
+</div>
+
+<!-- this is the division which deals with the list of subscribers-->
+<div id='list-of-subscribers'>
+        <!-- We need to access subscribers array through sections -->
+      	{{#subscribers_array}}
+        <!-- this section handles all the activities of subscriber design-->
+      	<div class='subscriber'>
+          		<h5>{{name}}</h5> <!-- The names are variables-->
+          		<input type='text' class='form-control' placeholder='Your Topic of Interest'>
+          		<button class='btn btn-default'>Subscribe</button>
+              <br><br>
+          		<h7>Subscriptions </h7>
+              		<ol class='TopicNames'>
+              			{{#TopicNames}}
+              			   <li> {{.}}
+              			{{/TopicNames}}
+              		</ol>
+              <!-- All the tweets are listed one by one in an unordered list-->
+          		<h7>Tweets From Your Subscriptions</h7>
+              		<ul class='sub_notif_list'>
+              			{{#sub_notif_list}}
+              			   <li> <b>{{TopicName}}: </b> <br>Tweet: {{Details}} <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-posted by <i>{{name}}</i>
+              			{{/sub_notif_list}}
+
+              		</ul>
+      	</div>
+      	{{/subscribers_array}}
+	<br style='clear:both' />
+</div>
+<!-- including js scripts-->
+<script src='node_modules/jquery/dist/jquery.js'></script>
+<script src='node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+<script src='publishsubscribe.js'></script>
+<script src='pubsubfunc.js'></script>
+<script src='node_modules/mustache/mustache.js'></script>
+
+
+<div id="flaticon">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
+</body>
+<html>
