@@ -3,7 +3,7 @@ import socket
 
 def Main():
     
-    host = '127.0.0.1' # localhost
+    host = 'server001' # localhost  # alias of server 01 in docker network
     port =  5029
     
     subscriberName = str(sys.argv[1])

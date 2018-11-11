@@ -190,7 +190,7 @@ def Main():
 
     # connecting with master server
 
-    master_host = '127.0.0.1' # localhost
+    master_host = 'server001' # localhost  # alias of server01 in docker network
     master_port =  5029
     
     serverName = str(sys.argv[1])
