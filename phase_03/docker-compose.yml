@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  server1:
+    build: ./server01
+    stdin_open: true
+    tty: true
+    ports: 
+      - 5029:5029
+    networks:
+      - pub-sub-distributed-rendezvous
+    container_name: server001
+
+  server2:
+    build: ./server02
+    stdin_open: true
+    tty: true
+    ports: 
+      - 5030:5030
+    networks:
+      - pub-sub-distributed-rendezvous
+    depends_on:
+      - server1
+    container_name: server002
+
+  client1:
+    build: ./client01
+    stdin_open: true
+    tty: true    
+    networks:
+      - pub-sub-distributed-rendezvous
+    depends_on:
+      - server1
+    container_name: client001
+
+  client2:
+    build: ./client02
+    stdin_open: true
+    tty: true    
+    networks:
+      - pub-sub-distributed-rendezvous
+    depends_on:
+      - server2
+    container_name: client002
+
+networks:
+  pub-sub-distributed-rendezvous:
+    driver: bridge
+
