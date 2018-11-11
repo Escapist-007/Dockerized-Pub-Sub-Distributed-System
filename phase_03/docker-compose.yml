@@ -19,6 +19,8 @@ services:
       - 5030:5030
     networks:
       - pub-sub-distributed-rendezvous
+    depends_on:
+      - server1
     container_name: server002
 
   client1:
@@ -27,6 +29,8 @@ services:
     tty: true    
     networks:
       - pub-sub-distributed-rendezvous
+    depends_on:
+      - server1
     container_name: client001
 
   client2:
@@ -35,6 +39,8 @@ services:
     tty: true    
     networks:
       - pub-sub-distributed-rendezvous
+    depends_on:
+      - server2
     container_name: client002
 
 networks:

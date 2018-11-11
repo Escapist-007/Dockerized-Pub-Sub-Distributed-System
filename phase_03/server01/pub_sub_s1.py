@@ -121,7 +121,7 @@ def publish(topic,event,indicator):
                         generatedEvents.setdefault(name, []).append(event)
                     flags[name] = 1
 
-    t = Timer(random.choice(list(range(10,16))), eventGenerator)
+    t = Timer(random.choice(list(range(20,26))), eventGenerator)
     t.start()
 
                  
@@ -154,7 +154,7 @@ def Main():
     print("Socket is now listening for new connection ...")
     
     # eventGenerator() will be called in a new thread after 10 to 15 seconds
-    t = Timer(random.choice(list(range(10,16))), eventGenerator)
+    t = Timer(random.choice(list(range(20,26))), eventGenerator)
     t.start()
     
     # An infinity loop - server will be up for infinity and beyond
