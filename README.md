@@ -61,11 +61,29 @@ docker run -d -p 80:80 --name pubsub_central pubsub-image:v1 #running image in a
 ```
 Now go to url `localhost:80` to see the output of the app from docker.
 
-### Youtube Video Demonstration
+### Youtube Video Demonstration (Phase -02)
 
 Here's a link to see the output: https://www.youtube.com/watch?v=fg4W4bTAShM
 
 There are also screenshots available in the repo under the Screenshots folder.
+
+# How to run phase-03 (Distributed Publisher/Subscriber System with distributes servers)
+
+First go the `phase_03` directory. Then run the below commands:
+
+```
+docker-compose up
+
+```
+
+If you want to stop the servers, then press `Ctrl+C`
+ 
+### Youtube Video Demonstration (Phase-03)
+
+Here's a link to see the output: https://www.youtube.com/watch?v=femzLKh3CBg
+
+There are also screenshots available in the repo under the Screenshots folder.
+
 
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Pub-Sub-Distributed-System-Using-Docker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
