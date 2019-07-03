@@ -67,7 +67,7 @@ Here's a link to see the output: https://www.youtube.com/watch?v=fg4W4bTAShM
 
 There are also screenshots available in the repo under the Screenshots folder.
 
-# How to run phase-03 (Distributed Publisher/Subscriber System with distributes servers)
+# How to run phase-03 (Distributed Publisher/Subscriber System with distributed servers)
 
 First go the `phase_03` directory. Then run the below commands:
 
