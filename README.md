@@ -4,7 +4,7 @@ Publish/Subscribe (or pub/sub for short) is a popular **indirect** communication
 
 # How to start with docker
 
-You will need to at first install **docker** if you do not have it already.
+You will need to install **docker** if you do not have it already.
 
 ```
 $ sudo snap install docker
@@ -61,9 +61,13 @@ docker run -d -p 80:80 --name pubsub_central pubsub-image:v1 #running image in a
 ```
 Now go to url `localhost:80` to see the output of the app from docker.
 
+
 ### Youtube Video Demonstration (Phase -02)
+****
 
 Here's a link to see the output: https://www.youtube.com/watch?v=fg4W4bTAShM
+
+***
 
 There are also screenshots available in the repo under the Screenshots folder.
 
@@ -79,8 +83,9 @@ docker-compose up
 If you want to stop the servers, then press `Ctrl+C`
  
 ### Youtube Video Demonstration (Phase-03)
-
+***
 Here's a link to see the output: https://www.youtube.com/watch?v=femzLKh3CBg
+***
 
 There are also screenshots available in the repo under the Screenshots folder.
 
