@@ -28,7 +28,8 @@ $ docker run hello-world # download an official image "hello-world" from docker 
 
 ```
 
-# How to run phase-01 (simple flask app and MyWayPoints django app)
+# How to run phase-01 
+`(simple flask app and MyWayPoints django app)`
 
 ###  Simple flask app
 
@@ -51,7 +52,8 @@ docker run -d -p 80:8000 --name django-container simple-django-app   # running t
 ```
 Now, go to the url `127.0.0.1:80/map` to see the output of the app from docker. 
 
-# How to run phase-02 (Distributed Publisher/Subscriber System with a Central Server)
+# How to run phase-02 
+`(Distributed Publisher/Subscriber System with a Central Server)`
 
 First go the `phase_02` directory. Then run the below commands:
 
@@ -71,7 +73,8 @@ Here's a link to see the output: https://www.youtube.com/watch?v=fg4W4bTAShM
 
 There are also screenshots available in the repo under the Screenshots folder.
 
-# How to run phase-03 (Distributed Publisher/Subscriber System with distributed servers)
+# How to run phase-03 
+`(Distributed Publisher/Subscriber System with distributed servers)`
 
 First go the `phase_03` directory. Then run the below commands:
 
@@ -92,3 +95,12 @@ There are also screenshots available in the repo under the Screenshots folder.
 
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Pub-Sub-Distributed-System-Using-Docker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
+---
+## License
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+
